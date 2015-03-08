@@ -33,8 +33,15 @@ g.point circle.c {
 	fill: #0000FF;
 }
 
-text.theta {
+text {
 	font-family: sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     fill: #333;
+}
+
+footer {
+	border-top: 1px solid #999;
+	margin-top: 20px;
+	padding-top: 20px;
+	font-size: 12px;
 }

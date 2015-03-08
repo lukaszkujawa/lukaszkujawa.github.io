@@ -30,7 +30,7 @@
 			this.initScales();
 			this.initAxis();
 
-			this.svg = d3.select("body").append("svg")
+			this.svg = d3.select("div.svg").append("svg")
 							.attr("width", this.width)
 							.attr("height", this.height);
 
@@ -42,6 +42,10 @@
 				theta1: AnimatedFunction.theta1
 			};
 
+			this.svg.append("text")
+				.attr("y", Settings.margin - 10)
+				.attr("x", Settings.margin)
+				.text("Cost Function: J(theta0, theta1)");
 			
 			this.svg.append("g")
 				.attr("class", "axis x")
@@ -261,7 +265,7 @@
 			var xLeft = -1;
 			var xRight = 2;
 
-			f = [func.transition(), func.enter().append("line")];
+			var f = [func.transition(), func.enter().append("line")];
 
 			for(i in f) {
 				f[i].attr("class", "func")
@@ -277,21 +281,25 @@
 									{v: this.theta1, i:1} 
 								]);
 
-			c = [caption, caption.enter().append("text")];
+			var c = [caption, caption.enter().append("text").attr("class","theta")];
 			for(i in c) {
-				c[i].attr("class","theta")
+				c[i]
 					.attr("x", 50)
 					.attr("y", function(d){ return Settings.height - 20 + 16 * d.i})
-					.attr("fill","black")
 					.text(function(d){ return "Theta" + d.i + ": " + Math.round(d.v * 100000) / 100000});
 			}	
 
 			var learnRate = svg.selectAll("text.learnRate")
 								.data([this.learnRate]);
 
-								
-
-
+			var l = [learnRate, learnRate.enter().append("text").attr("class","learnRate")];
+			for(i in l) {
+				l[i]
+					.attr("x", 170)
+					.attr("y", Settings.height - 20)
+					.text(function(d) {return "Animation Speed: x" + GradDesc.animationSpeed + " (press q/w to change)"});
+			}
+			
 		}
 
 	}
@@ -351,6 +359,7 @@
 		normY: null,
 		
 		svg: null,
+		animationSpeed: 1,
 
 
 		init: function() {
@@ -359,6 +368,19 @@
 			this.initSvg();
 			AnimatedFunction.init();
 			CostFunction.init();
+
+			d3.select("body").on("keydown", function() {
+				if(d3.event.keyCode == 81) {
+					if(GradDesc.animationSpeed > 1) {
+						GradDesc.animationSpeed -= 1;
+					}
+				}
+				else if(d3.event.keyCode == 87) {
+					if(GradDesc.animationSpeed < 10) {
+						GradDesc.animationSpeed += 1;
+					}
+				}
+			});
 
 			this.drawAll();
 		},
@@ -383,7 +405,7 @@
 
 		initSvg: function() {
 			var self = this;
-			this.svg = d3.select("body").append("svg")
+			this.svg = d3.select("div.svg").append("svg")
 							.attr("width", Settings.width)
 							.attr("height", Settings.height);
 
@@ -429,9 +451,16 @@
 
 		drawAll: function() {
 			this.draw(this.svg);
+
+			this.svg.append("text")
+				.attr("y", Settings.margin - 10)
+				.attr("x", Settings.margin)
+				.text("Hypothesis Function: Ho(x)=theta0 + theta1 * x");
+
 			AnimatedFunction.draw(this.svg);
 			Axies.draw(this.svg);
 			CostFunction.draw(this.svg);
+
 		}
 
 
@@ -441,10 +470,10 @@
 	GradDesc.init();
 	setInterval(function() {
 		if(go && Dataset.length > 1) {
-			for(i = 0 ; i < 100 ; i++) {
+			for(i = 0 ; i < 100 + (200 * GradDesc.animationSpeed) ; i++) {
 				AnimatedFunction.iterateTheta();
 			}
-			
+
 			AnimatedFunction.draw(GradDesc.svg);
 			CostFunction.animatePointer();
 		}
