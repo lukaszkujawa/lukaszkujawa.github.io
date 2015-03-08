@@ -43,5 +43,9 @@ footer {
 	border-top: 1px solid #999;
 	margin-top: 20px;
 	padding-top: 20px;
-	font-size: 12px;
+	font-size: 14px;
+}
+
+a {
+	color: #5577DD;
 }
