@@ -142,6 +142,12 @@
 							theta1: AnimatedFunction.theta1}]);
 
 			var g = point.enter().append("g");
+			g.append("circle")
+				.attr("cx", Math.round(x2))
+				.attr("cy", Math.round(y2))
+				.attr("r", "1.4")
+				.attr("fill", "blue");
+
 			g.append("line")
 				.attr("stroke", "red")
 				.attr("x1", Math.round(x1))
@@ -149,11 +155,7 @@
 				.attr("x2", function(d){return Math.round(x2);})
 				.attr("y2", function(d){return Math.round(y2);});
 
-			g.append("circle")
-				.attr("cx", Math.round(x2))
-				.attr("cy", Math.round(y2))
-				.attr("r", "1.4")
-				.attr("fill", "red");
+			
 
 			this.prevPoint = {
 							theta0: AnimatedFunction.theta0, 
