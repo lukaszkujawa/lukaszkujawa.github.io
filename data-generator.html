@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="generator.css">
+    </head>
+	<body>
+		<div class="svg"></div>
+		
+		<div class="panel">
+			
+			<div>
+				<button id="blue" class="color selected">blue</button>
+				<button id="red" class="color">red</button>
+			</div>
+			
+			<div class="axis-panel">
+				X range (<input name="x_from" type="text" value="-1" />, <input name="x_to" type="text" value="1" />)
+				Y range (<input name="y_from" type="text" value="-1" />, <input name="y_to" type="text" value="1" />)
+				<button id="updateAxis">update axis</button>
+			</div>
+
+			<div class="export-panel">
+				blue: <input name="blue" type="text" value="0" />
+				red: <input name="red" type="text" value="1" />
+				<button id="export">export</button>
+			</div>
+
+		</div>
+
+		<div class="export">		
+			<textarea></textarea>
+		</div>
+
+		<script src="/js/jquery-2.1.3.min.js"></script>
+        <script src="/js/d3/d3.min.js" charset="utf-8"></script>
+        <script src="/js/generator.js"></script>
+	</body>
+</html>
